@@ -5,15 +5,18 @@ Assets.prototype.constructor = Assets;
 
 $.extend(Assets.prototype, {
     init: function () {
-        // this.setupCanvas();
+        this.setupCanvas();
         this.loadImages();
+        // this.loadSprites
+        // this.loadSFX
+        // this.loadMusic
     },
     setupCanvas: function () {
-        // var canvas = $('canvas');
-        // var gameDiv = $('.game').addClass('contentCentered');
-        // var emptyDiv = $('<div>', {'class':'container'});
-        // emptyDiv.append(canvas);
-        // gameDiv.append(emptyDiv);
+        var canvas = $('canvas');
+        var gameDiv = $('.game').addClass('contentCentered');
+        var emptyDiv = $('<div>', {'class':'container'});
+        emptyDiv.append(canvas);
+        gameDiv.append(emptyDiv);
     },
     loadImages: function() {
         Phaser.Canvas.setSmoothingEnabled(game.context, false);
