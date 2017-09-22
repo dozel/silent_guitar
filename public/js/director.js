@@ -26,8 +26,8 @@ $.extend(Director.prototype, {
       this.conrols = new Controls();
       this.player = new Player(this.actors);
       game.camera.follow(this.player);
-      // this.npc1 = new NPC(this.actors, '0');
-      // this.npc2 = new NPC(this.actors, '1');
-      // this.npc3 = new NPC(this.actors, '2');
+      this.npc1 = new NPC(this.actors, 0);
+      this.npc2 = new NPC(this.actors, 1);
+      this.npc3 = new NPC(this.actors, 3);
     },
 });

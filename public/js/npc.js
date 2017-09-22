@@ -1,8 +1,9 @@
 var NPC = function(group, npcIndex) {
-  group.add(this);
   this.npcIndex = npcIndex;
   this.spriteName = assets.sprites[this.npcIndex].name;
-  Phaser.Sprite.call(this, game, game.world.centerX + Math.floor(Math.random() * 200), game.world.centerY - Math.floor(Math.random() * 50), this.spriteName);
+  Phaser.Sprite.call(this, game, game.world.centerX + Math.floor(Math.random() * 400), game.world.centerY - Math.floor(Math.random() * 200), this.spriteName);
+  this.group = group;
+  group.add(this);
   game.physics.enable(this, Phaser.Physics.ARCADE);
   this.init();
 };
