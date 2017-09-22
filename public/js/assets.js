@@ -29,10 +29,10 @@ $.extend(Assets.prototype, {
       'tempBg',
     ];
     this.sprites = [
-      { name: 'bassist', file: 'bassist_run', width: 32, height: 41, count: 6 },
-      { name: 'drummer', file: 'drummer_run', width: 21, height: 34, count: 6 },
-      { name: 'guitarist', file: 'guitarist_run', width: 28, height: 42, count: 6 },
-      { name: 'synthist', file: 'synth_run', width: 26, height: 39, count: 6 },
+      { name: 'bassist', file: 'bassist_run', width: 64, height: 82, count: 6 },
+      { name: 'drummer', file: 'drummer_run', width: 42, height: 68, count: 6 },
+      { name: 'guitarist', file: 'guitarist_run', width: 56, height: 84, count: 6 },
+      { name: 'synthist', file: 'synth_run', width: 52, height: 78, count: 6 },
     ];
   },
   loadImages: function() {

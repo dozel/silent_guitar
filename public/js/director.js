@@ -16,9 +16,8 @@ $.extend(Director.prototype, {
       this.background.smoothed = false;
 
       game.physics.startSystem(Phaser.Physics.ARCADE);
-
-      game.world.setBounds(0, 0, this.background.width, this.background.height);
       game.camera.x = (game.world.width - game.camera.width) / 2;
+      game.world.setBounds(0, 0, this.background.width, this.background.height);
     },
     initActors: function() {
       this.actors = game.add.group(world);
