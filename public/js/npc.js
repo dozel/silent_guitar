@@ -1,7 +1,7 @@
-var NPC = function(group, npcIndex) {
+var NPC = function(group, npcIndex, position) {
   this.npcIndex = npcIndex;
   this.spriteName = assets.sprites[this.npcIndex].name;
-  Phaser.Sprite.call(this, game, game.world.centerX + Math.floor(Math.random() * 100), game.world.centerY - Math.floor(Math.random() * 200), this.spriteName);
+  Phaser.Sprite.call(this, game, position.x, position.y, this.spriteName);
   this.group = group;
   group.add(this);
   game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -29,7 +29,7 @@ $.extend(NPC.prototype, {
 
     this.body.setSize(60, 21, (this.width - 60) / 2, this.height - 21);
     this.body.collideWorldBounds = true;
-    this.setIdle();
+    // this.setIdle();
   },
   setIdle: function() {
     if (this.idle) {
@@ -39,6 +39,12 @@ $.extend(NPC.prototype, {
     this.loadTexture(this.spriteName);
     this.animations.add(this.spriteName + 'Run');
     this.animations.play(this.spriteName + 'Run', 8, true);
+  },
+  showTalkIcon: function() {
+    this.tint = 0x491b68;
+  },
+  clearTalkIcon: function() {
+    this.tint = 0xffffff;
   },
   // setRun: function () {
   //     if (!this.moving) {

@@ -23,11 +23,12 @@ $.extend(Director.prototype, {
       this.actors = game.add.group(world);
       this.dialogues = game.add.group(world);
 
-      this.controls = new Controls();
+      this.npc1 = new NPC(this.actors, 0, { x: 900 * 2, y: 200 * 2 });
+      this.npc2 = new NPC(this.actors, 1, { x: 1400 * 2, y: 190 * 2 });
+      this.npc3 = new NPC(this.actors, 3, { x: 1800 * 2, y: 360 * 2 });
+
+      this.controls = new Controls([this.npc1, this.npc2, this.npc3]);
       this.player = new Player(this.actors, this.controls, this.dialogues);
       game.camera.follow(this.player);
-      this.npc1 = new NPC(this.actors, 0);
-      this.npc2 = new NPC(this.actors, 1);
-      this.npc3 = new NPC(this.actors, 3);
     },
 });

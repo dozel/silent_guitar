@@ -12,19 +12,7 @@ var Player = function(group, controls, dialogueGroup) {
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.update  = function(){
-  this.controls.move(this);
-  if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-    if (this.pressed) {
-      return;
-    }
-    this.pressed = true;
-    var dialogues = this.randomDialogue();
-    console.log(dialogues);
-    this.dialogue.start(dialogues, this.x + this.width / 2, this.y - this.height / 2);
-    $(this.dialogue).on('dialogueEnded', function () {
-      this.pressed = false;
-    }.bind(this));
-  }
+  this.controls.update(this);
 };
 $.extend(Player.prototype, {
   init: function() {
