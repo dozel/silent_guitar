@@ -1,4 +1,4 @@
-var NPC = function(group, npcIndex, position) {
+var NPC = function(group, npcIndex, position, dialogueGroup) {
   this.npcIndex = npcIndex;
   this.spriteName = assets.sprites[this.npcIndex].name;
   Phaser.Sprite.call(this, game, position.x, position.y, this.spriteName);
@@ -6,6 +6,7 @@ var NPC = function(group, npcIndex, position) {
   group.add(this);
   game.physics.enable(this, Phaser.Physics.ARCADE);
   this.init();
+  this.initDialogue(dialogueGroup);
 };
 NPC.prototype = Object.create(Phaser.Sprite.prototype);
 NPC.prototype.constructor = NPC;
@@ -30,6 +31,10 @@ $.extend(NPC.prototype, {
     this.body.setSize(60, 21, (this.width - 60) / 2, this.height - 21);
     this.body.collideWorldBounds = true;
     // this.setIdle();
+  },
+  initDialogue: function(dialogueGroup) {
+    var colors = [0x491b68, 0x491b68, 0x063047, 0x491b68];
+    this.dialogue = new Dialogue(dialogueGroup, colors[this.npcIndex]);
   },
   setIdle: function() {
     if (this.idle) {

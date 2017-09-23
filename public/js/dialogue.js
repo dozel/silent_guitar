@@ -1,24 +1,25 @@
 var PADDING = 50;
-var Dialogue = function(group) {
-  this.init(group);
+var Dialogue = function(group, color) {
+  this.init(group, color);
 };
 Dialogue.prototype.constructor = Dialogue;
 
 $.extend(Dialogue.prototype, {
-  init: function(group) {
+  init: function(group, color) {
     this.rectangle = game.add.graphics(0, 0, group);
-    this.rectangle.beginFill(0x063047, 1);
+    this.rectangle.beginFill(color, 1);
     this.rectangle.drawRect(0, 0, PADDING, PADDING / 2);
     this.rectangle.endFill();
     this.rectangle.alpha = 0;
 
-    this.style = { font: '24pt m3x6', fill: '#ba509a', align: 'left', wordWrap: true, wordWrapWidth: 350 };
+    this.style = { font: '24pt m3x6', fill: 'white', align: 'left', wordWrap: true, wordWrapWidth: 350 };
     this.textbox = game.add.text(this.rectangle.x, this.rectangle.y, '', this.style);
     this.textbox.lineSpacing = -20;
     this.textbox.alpha = 0;
     group.add(this.textbox);
   },
   start: function(lines, cornerX, cornerY) {
+    console.log('started:', lines);
     this.lines = lines;
     var firstLine = this.lines[0];
     this.currentLine = 0;
@@ -33,10 +34,13 @@ $.extend(Dialogue.prototype, {
   },
   change: function(line) {
     if (this.currentLine < this.lines.length - 1) {
+      this.currentLine += 1;
       if (!line) {
-        this.currentLine += 1;
         line = this.lines[this.currentLine];
       }
+      this.changeToLine(line);
+    } else if (line && this.currentLine === 0 && this.lines.length === 1) {
+      this.currentLine += 1;
       this.changeToLine(line);
     } else { // disappear - last line
       this.disappear();

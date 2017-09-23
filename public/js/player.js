@@ -1,7 +1,6 @@
-var Player = function(group, controls, dialogueGroup) {
+var Player = function(group, dialogueGroup) {
   Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'guitarist');
   this.group = group;
-  this.controls = controls;
   group.add(this);
   this.physicsEnabled = true;
   game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -12,7 +11,7 @@ var Player = function(group, controls, dialogueGroup) {
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.update  = function(){
-  this.controls.update(this);
+  controls.update(this);
 };
 $.extend(Player.prototype, {
   init: function() {
@@ -27,22 +26,7 @@ $.extend(Player.prototype, {
     this.setIdle();
   },
   initDialogue: function(dialogueGroup) {
-    this.dialogue = new Dialogue(dialogueGroup);
-  },
-  randomDialogue: function() {
-    var dialogues = [];
-    var count = Math.floor(Math.random() * 10);
-    for (var i = 0; i < count; i++) {
-      var wordCount = Math.floor(Math.random() * 10);
-      var dialogue = '';
-      for (var j = 0; j < wordCount; j++) {
-        var randomLength = Math.floor(Math.random() * 12);
-        dialogue += Math.random().toString(36).slice(13 - randomLength)
-        dialogue += ' ';
-      }
-      dialogues.push(dialogue);
-    }
-    return dialogues;
+    this.dialogue = new Dialogue(dialogueGroup, 0x063047);
   },
   setRun: function () {
     // this.speed = this.viceToSpeed[this.status];

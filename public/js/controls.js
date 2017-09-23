@@ -1,49 +1,42 @@
-var Controls = function(npcs) {
-  this.init(npcs);
+var Controls = function() {
+  this.init();
 };
 Controls.prototype.constructor = Controls;
 
 $.extend(Controls.prototype, {
-  init: function(npcs) {
+  init: function() {
     this.status = 'moveIt';
-    this.npcs = npcs;
     cursors = game.input.keyboard.createCursorKeys();
   },
   pause: function() {
 
   },
-  isPlayerClose: function(player) {
+  isPlayerClose: function() {
     var playerClose = false;
-    for (var i = 0; i < this.npcs.length; i++) {
-      var npc = this.npcs[i];
+    for (var i = 0; i < npcs.length; i++) {
+      var npc = npcs[i];
       var distance = game.math.distance(npc.x, npc.y, player.x, player.y);
       if (distance < 150) {
+        convoNPC = npc;
         npc.showTalkIcon();
         return true;
       }
     }
-    for (var i = 0; i < this.npcs.length; i++) {
-      var npc = this.npcs[i];
+    for (var i = 0; i < npcs.length; i++) {
+      var npc = npcs[i];
       npc.clearTalkIcon();
     }
+    convoNPC = null;
     return playerClose;
   },
-  update: function(player) {
+  update: function() {
     this.move(player);
     var playerClose = this.isPlayerClose(player);
     if (playerClose && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-      if (this.pressed) {
-        return;
-      }
-      this.pressed = true;
-      var dialogues = player.randomDialogue();
-      player.dialogue.start(dialogues, player.x + player.width / 2, player.y - player.height / 2);
-      $(player.dialogue).on('dialogueEnded', function () {
-        this.pressed = false;
-      }.bind(this));
+      director.converse();
     }
   },
-  move: function(player) {
+  move: function() {
     if (this.status === 'moveIt') {
       if (cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) {
         // player.setRun();
