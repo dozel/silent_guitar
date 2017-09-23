@@ -13,19 +13,17 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.update  = function(){
   this.controls.move(this);
-  // if (this. && !this.animating && !gameOver) {
-  //   game.physics.arcade.collide(player, walls);
-  // }
-
   if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-    this.dialogue.start([
-      'What the...',
-      'Are you ok?',
-      'What happened little one?',
-      'Can you speak?',
-      '...',
-      'Alright, I’ll find out what happened.',
-    ], this.x + this.width / 2, this.y - this.height / 2);
+    if (this.pressed) {
+      return;
+    }
+    this.pressed = true;
+    var dialogues = this.randomDialogue();
+    console.log(dialogues);
+    this.dialogue.start(dialogues, this.x + this.width / 2, this.y - this.height / 2);
+    $(this.dialogue).on('dialogueEnded', function () {
+      this.pressed = false;
+    }.bind(this));
   }
 };
 $.extend(Player.prototype, {
@@ -42,6 +40,21 @@ $.extend(Player.prototype, {
   },
   initDialogue: function(dialogueGroup) {
     this.dialogue = new Dialogue(dialogueGroup);
+  },
+  randomDialogue: function() {
+    var dialogues = [];
+    var count = Math.floor(Math.random() * 10);
+    for (var i = 0; i < count; i++) {
+      var wordCount = Math.floor(Math.random() * 10);
+      var dialogue = '';
+      for (var j = 0; j < wordCount; j++) {
+        var randomLength = Math.floor(Math.random() * 12);
+        dialogue += Math.random().toString(36).slice(13 - randomLength)
+        dialogue += ' ';
+      }
+      dialogues.push(dialogue);
+    }
+    return dialogues;
   },
   setRun: function () {
     // this.speed = this.viceToSpeed[this.status];
