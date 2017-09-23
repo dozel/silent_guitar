@@ -21,9 +21,10 @@ $.extend(Director.prototype, {
     },
     initActors: function() {
       this.actors = game.add.group(world);
+      this.dialogues = game.add.group(world);
 
-      this.conrols = new Controls();
-      this.player = new Player(this.actors);
+      this.controls = new Controls();
+      this.player = new Player(this.actors, this.controls, this.dialogues);
       game.camera.follow(this.player);
       this.npc1 = new NPC(this.actors, 0);
       this.npc2 = new NPC(this.actors, 1);

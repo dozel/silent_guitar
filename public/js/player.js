@@ -1,19 +1,32 @@
-var Player = function(group) {
+var Player = function(group, controls, dialogueGroup) {
   Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'guitarist');
   this.group = group;
+  this.controls = controls;
   group.add(this);
   this.physicsEnabled = true;
   game.physics.enable(this, Phaser.Physics.ARCADE);
   this.init();
+  this.initDialogue(dialogueGroup);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.update  = function(){
-  this.move();
+  this.controls.move(this);
   // if (this. && !this.animating && !gameOver) {
   //   game.physics.arcade.collide(player, walls);
   // }
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+    this.dialogue.start([
+      'What the...',
+      'Are you ok?',
+      'What happened little one?',
+      'Can you speak?',
+      '...',
+      'Alright, I’ll find out what happened.',
+    ], this.x + this.width / 2, this.y - this.height / 2);
+  }
 };
 $.extend(Player.prototype, {
   init: function() {
@@ -27,42 +40,8 @@ $.extend(Player.prototype, {
     this.body.collideWorldBounds = true;
     this.setIdle();
   },
-  move: function() {
-    if (cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-      // player.setRun();
-      this.body.velocity.y = -1 * this.speed;
-      this.group.sort('bottom', Phaser.Group.SORT_ASCENDING);
-    }
-    else if (cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-      // player.setRun();
-      this.body.velocity.y = this.speed;
-      this.group.sort('bottom', Phaser.Group.SORT_ASCENDING);
-    }
-    else {
-      this.body.velocity.y = 0;
-      if (this.body.velocity.x === 0) {
-        // player.setIdle();
-      }
-    }
-
-    if (cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-      // player.setRun();
-      this.scale.x = -1;
-      this.body.velocity.x = -1 * this.speed;
-      this.group.sort('bottom', Phaser.Group.SORT_ASCENDING);
-    }
-    else if (cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-      // player.setRun();
-      this.scale.x = 1;
-      this.body.velocity.x = this.speed;
-      this.group.sort('bottom', Phaser.Group.SORT_ASCENDING);
-    }
-    else {
-      this.body.velocity.x = 0;
-      if (this.body.velocity.y === 0) {
-        // player.setIdle();
-      }
-    }
+  initDialogue: function(dialogueGroup) {
+    this.dialogue = new Dialogue(dialogueGroup);
   },
   setRun: function () {
     // this.speed = this.viceToSpeed[this.status];
